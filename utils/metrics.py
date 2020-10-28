@@ -75,6 +75,8 @@ def plot_confusion_matrix(cm,
     plt.tight_layout()
     plt.ylabel('True label')
     plt.xlabel('Predicted label\naccuracy={:0.4f}; misclass={:0.4f}'.format(accuracy, misclass))
-    if "visualizations" not in os.listdir("../"):
-        os.mkdir("../visualizations")
-    plt.savefig("../visualizations"+"confusion_matrix.png")
+    if "visualizations" not in os.listdir():
+        os.mkdir("visualizations")
+    save_path = "visualizations/"+"confusion_matrix.png"
+    plt.savefig(save_path)
+    print("Confusion Matrix saved at "+save_path)
