@@ -1,0 +1,7 @@
+data/
+tensorboard_logs/
+visualizations/
+**/__pycache__/
+
+# File types
+*.ipynb
