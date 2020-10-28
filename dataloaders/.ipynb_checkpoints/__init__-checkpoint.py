@@ -1,1 +1,0 @@
-from .mnist import build_mnist
