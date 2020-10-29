@@ -8,8 +8,9 @@ from torch.utils.data import random_split
 def build_mnist(val_ratio, batch_size, transform):
     train_dataset = MNIST(os.path.join(os.getcwd(),"data/"), train=True, download=True, transform=transform)
     test_dataset = MNIST(os.path.join(os.getcwd(),"data/"), train=False, download=True, transform=transform)
-
-    train, val = random_split(train_dataset, [int(train_dataset.__len__()*(1-val_ratio)), int(train_dataset.__len__()*val_ratio)])
+    
+    val_size = int(train_dataset.__len__()*val_ratio) # size of validation data
+    train, val = random_split(train_dataset, [train_dataset.__len__()-val_size, val_size])
     train = DataLoader(train, num_workers=8, batch_size=batch_size)
     val = DataLoader(val, num_workers=8, batch_size=batch_size)
 
