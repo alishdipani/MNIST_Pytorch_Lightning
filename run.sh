@@ -18,7 +18,7 @@ seed=42
 model_name=CNN3
 
 # Experiment
-experiment_name=${model_name}_seed${seed}
+experiment_name=MNIST-Model=${model_name}
 
 python train.py --gpus $gpus \
     --val_ratio $val_ratio \
