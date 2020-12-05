@@ -61,7 +61,9 @@ def main(hparams):
         monitor='val_loss',
         filename='{epoch:02d}-{val_loss:.2f}',
         save_top_k=3,
-        mode='min')
+        mode='min',
+        verbose=True
+    )
     
     # Trainer
     trainer = pl.Trainer(gpus=hparams.gpus, max_epochs=hparams.epochs, progress_bar_refresh_rate=10, \
@@ -76,7 +78,13 @@ def main(hparams):
         yaml.dump(vars(args), outfile, default_flow_style=False)
     
     # Testing
-    trainer.test(test_dataloaders=test_dataloader)
+    results = trainer.test(test_dataloaders=test_dataloader)
+    results = results[0] # PL returns list of dicts for each test dataloader
+    
+    # Saving Results
+    yaml_path = f'tensorboard_logs/{args.experiment_name}/version_{args.version_num}'
+    with open(f'{yaml_path}/results.yml', 'w') as outfile:
+        yaml.dump(results, outfile, default_flow_style=False)
 
 if __name__ == '__main__':
     parser = ArgumentParser()

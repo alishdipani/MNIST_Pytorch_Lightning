@@ -16,6 +16,7 @@ from utils.metrics import plot_confusion_matrix
 class CNN3(pl.LightningModule):
     def __init__(self, args):
         super().__init__()
+        self.args = args
         # 28*28*1
         self.CNN = nn.Sequential(
             nn.Conv2d(in_channels=1,out_channels=8,kernel_size=5,stride=1,padding=2),
@@ -99,7 +100,8 @@ class CNN3(pl.LightningModule):
         plot_confusion_matrix(cm.cpu().numpy(), \
                               target_names=[str(i) for i in range(10)], \
                               title='Confusion Matrix',normalize=False, \
-                              cmap=plt.get_cmap('bwr'))
+                              cmap=plt.get_cmap('bwr'), \
+                              args=self.args)
         return None
 
     def configure_optimizers(self):

@@ -7,7 +7,8 @@ def plot_confusion_matrix(cm,
                           target_names,
                           title='Confusion matrix',
                           cmap=None,
-                          normalize=False):
+                          normalize=False,
+                          args=None):
     """
     given a sklearn confusion matrix (cm), make a nice plot
 
@@ -26,6 +27,8 @@ def plot_confusion_matrix(cm,
 
     normalize:    If False, plot the raw numbers
                   If True, plot the proportions
+    
+    args:         Arguments from argparser to decide where to save
 
     Usage
     -----
@@ -33,7 +36,8 @@ def plot_confusion_matrix(cm,
                                                               # sklearn.metrics.confusion_matrix
                           normalize    = True,                # show proportions
                           target_names = y_labels_vals,       # list of names of the classes
-                          title        = best_estimator_name) # title of graph
+                          title        = best_estimator_name, # title of graph
+                          args)                               # Arguments having experiment name and version number
 
     Citiation
     ---------
@@ -75,8 +79,9 @@ def plot_confusion_matrix(cm,
     plt.tight_layout()
     plt.ylabel('True label')
     plt.xlabel('Predicted label\naccuracy={:0.4f}; misclass={:0.4f}'.format(accuracy, misclass))
-    if "visualizations" not in os.listdir():
-        os.mkdir("visualizations")
-    save_path = "visualizations/"+"confusion_matrix.png"
-    plt.savefig(save_path)
-    print("Confusion Matrix saved at "+save_path)
+    save_path = f'tensorboard_logs/{args.experiment_name}/version_{args.version_num}'
+    if "visualizations" not in os.listdir(save_path):
+        os.mkdir(save_path+"/visualizations")
+    viz_path = f'tensorboard_logs/{args.experiment_name}/version_{args.version_num}/visualizations/confusion_matrix.png'
+    plt.savefig(viz_path)
+    print("Confusion Matrix saved at "+viz_path)
