@@ -14,7 +14,7 @@ from pytorch_lightning.metrics.functional.classification import confusion_matrix
 from utils.metrics import plot_confusion_matrix
 
 class CNN3(pl.LightningModule):
-    def __init__(self):
+    def __init__(self, args):
         super().__init__()
         # 28*28*1
         self.CNN = nn.Sequential(
